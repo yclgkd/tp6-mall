@@ -102,12 +102,13 @@ abstract class BaseController
         //dump($name, $arguments);
         //逻辑：如果我们的模块是API模块的话，需要输出API的数据格式
         //如果我们是模板引擎的方式，我们只需要输出错误的页面
-        $result = [
-            'status' => 0,
-            'message' => '找不到该方法',
-            'result' => null
-        ];
-        return json($result, 400);
+//        $result = [
+//            'status' => 0,
+//            'message' => '找不到{$name}方法',
+//            'result' => null
+//        ];
+//        return json($result, 400);
+        return show(0, "找不到{$name}方法", null, 404);
     }
 
 }
