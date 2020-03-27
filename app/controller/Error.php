@@ -11,7 +11,7 @@ class Error{
     {
         // TODO: Implement __call() method.
         $result = [
-            'status' => 0,
+            'status' => config("status.controller_not_found"),
             'message' => '找不到该控制器',
             'result' => null
         ];

@@ -108,7 +108,7 @@ abstract class BaseController
 //            'result' => null
 //        ];
 //        return json($result, 400);
-        return show(0, "找不到{$name}方法", null, 404);
+        return show(config("status.action_not_found"), "找不到{$name}方法", null, 404);
     }
 
 }
