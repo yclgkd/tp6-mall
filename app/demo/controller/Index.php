@@ -9,4 +9,7 @@ class Index
     {
         return '您好！这是一个[demo]示例应用';
     }
+    public function hello(){
+        return time();
+    }
 }
