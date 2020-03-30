@@ -6,7 +6,7 @@
  */
 namespace app\demo\controller;
 use \app\BaseController;
-use \app\model\Demo;
+use app\common\business\Demo;
 
 
 class M extends BaseController{
@@ -15,15 +15,9 @@ class M extends BaseController{
         if (empty($categoryId)){
             return show(config("status.error"), "参数错误");
         }
-        $model = new Demo();
-        $results = $model->getDemoDataByCategoryId($categoryId);
-        $categorys = config("category");
-        if (empty($results)){
-            return show(config("status.error"), "数据为空");
-        }
-        foreach ($results as $key=>$result){
-            $results[$key]['category_id'] = $categorys[$result["category_id"]] ?? "其他";
-        }
+        //调用business层的方法
+        $demo = new Demo();
+        $results = $demo->getDemoDataByCategoryId($categoryId);
         return show(config("status.success"), "ok", $results);
     }
 }

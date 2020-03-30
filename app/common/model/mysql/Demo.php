@@ -4,7 +4,7 @@
  * Date: 2020/3/29
  * Time: 21:30
  */
-namespace app\model;
+namespace app\common\model\mysql;
 use think\Model;
 
 class demo extends Model{
