@@ -12,4 +12,7 @@ class E extends BaseController{
 //        echo $abc;
         throw new \think\exception\HttpException(404, "找不到相应的数据");
     }
+    public function abc() {
+        dump($this->request->type);
+    }
 }
