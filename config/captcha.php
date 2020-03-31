@@ -32,8 +32,8 @@ return [
     'imageW'   => 0,
 
     // 添加额外的验证码设置
-    // verify => [
-    //     'length'=>4,
-    //    ...
-    //],
+    'verify' => [
+         'length'=> 3,
+        'codeSet'  => '012345678abcdefhijkmnpqrstuvwxyzABCDEFGHJKLMNPQRTUVWXY',
+    ],
 ];
