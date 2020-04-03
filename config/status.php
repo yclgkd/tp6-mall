@@ -11,5 +11,11 @@ return [
     "not_login" => -1,
     "user_is_register" => -2,
     "action_not_found" => -3,
-    "controller_not_found" => -4
+    "controller_not_found" => -4,
+
+    "mysql" => [
+        "table_normal" => 1,
+        "table_pending" => 0,
+        "table_delete" => 99
+    ],
 ];
