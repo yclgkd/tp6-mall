@@ -41,14 +41,23 @@ class Login extends AdminBase
         $username = $this->request->param("username", "", "trim");
         $password = $this->request->param("password", "", "trim");
         $captcha = $this->request->param("captcha", "", "trim");
-        if (empty($username) || empty($password) || empty($captcha)) {
-            return show(config("status.error"), "参数不能为空");
+        $data = [
+            'username' => $username,
+            'password' => $password,
+            'captcha' => $captcha
+        ];
+        $validate = new \app\admin\validate\AdminUser();
+        if (!$validate->check($data)){
+            return show(config("status.error"), $validate->getError());
         }
+        //if (empty($username) || empty($password) || empty($captcha)) {
+            //return show(config("status.error"), "参数不能为空");
+        //}
         //校验验证码
-        if (!captcha_check($captcha)) {
+        //if (!captcha_check($captcha)) {
             //验证码校验失败
-            return show(config("status.error"), "验证码不正确");
-        }
+            //return show(config("status.error"), "验证码不正确");
+        //}
         try {
             $adminUserObj = new AdminUser();
             //判断是否存在该用户
