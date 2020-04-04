@@ -7,9 +7,13 @@
 namespace app\admin\controller;
 
 use app\BaseController;
+use think\facade\View;
 
 class Index extends BaseController {
     public function index() {
-        echo "hello-admin";
+        return View::fetch();
+    }
+    public function welcome() {
+        return View::fetch();
     }
 }
