@@ -10,8 +10,18 @@ use think\Response;
 use Throwable;
 class Http extends Handle {
     public $httpStatus = 500;
+
+    /**
+     * Render an exception into an HTTP response.
+     * @param \think\Request $request
+     * @param Throwable $e
+     * @return Response
+     */
     public function render($request, Throwable $e): Response
     {
+        if ($e instanceof \think\Exception) {
+            return show($e->getCode(), $e->getMessage());
+        }
         if (method_exists($e, "getStatusCode")){
             $httpStatus = $e->getStatusCode();
         }else{

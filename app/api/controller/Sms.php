@@ -22,19 +22,20 @@ class Sms extends BaseController {
             return show(config("status.error"), $e->getError());
         }
 
-        //$rand_num = rand(0,9);
-        //if(($rand_num >= 0) && ($rand_num < 4)) {
+        //短信流量控制分发
+        //$rand_num = rand(0,99);
+        //if(($rand_num < 40) {
             //40%使用阿里云短信验证
-        //} else if(($rand_num >= 4) && ($rand_num < 7)) {
+            //调用business层的数据
+            if (SmsBus::sendCode($phoneNumber, 6, "ali")) {
+                return show(config("status.success"), "发送验证码成功");
+            }
+        //} else if($rand_num >= 70) {
             //30%使用百度云短信验证
         //} else {
             //30%使用京东云短信验证
         //}
 
-        //调用business层的数据
-        if (SmsBus::sendCode($phoneNumber, 6, "ali")) {
-            return show(config("status.success"), "发送验证码成功");
-        }
         return show(config("status.error"), "发送验证码失败");
     }
 }

@@ -12,7 +12,7 @@ use app\common\lib\Num;
 use app\common\lib\ClassArr;
 
 class Sms {
-    public static function sendCode(string $phoneNumber, int $len, $type = "ali") :bool {
+    public static function sendCode(string $phoneNumber, int $len, string $type = "ali") :bool {
 
         $code = Num::getCode($len);
         //$sms = AliSms::sendCode($phoneNumber, $code);
