@@ -9,6 +9,7 @@ namespace app\common\lib\sms;
 use AlibabaCloud\Client\AlibabaCloud;
 use AlibabaCloud\Client\Exception\ClientException;
 use AlibabaCloud\Client\Exception\ServerException;
+use think\facade\Log;
 
 class AliSms {
     /**
@@ -49,14 +50,20 @@ class AliSms {
                     ],
                 ])
                 ->request();
+            Log::info("alisms-sendCode-{$phone}result".json_encode($result->toArray()));
             //print_r($result->toArray());
         } catch (ClientException $e) {
+            Log::error("alisms-sendCode-{$phone}ClientException".$e->getErrorMessage());
             return false;
             //echo $e->getErrorMessage() . PHP_EOL;
         } catch (ServerException $e) {
+            Log::error("alisms-sendCode-{$phone}ServerException".$e->getErrorMessage());
             return false;
             //echo $e->getErrorMessage() . PHP_EOL;
         }
-        return true;
+        if (isset($result['Code']) && $result['Code'] == "OK") {
+            return true;
+        }
+        return false;
     }
 }
