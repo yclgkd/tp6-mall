@@ -8,11 +8,12 @@ declare(strict_types=1);
 namespace app\common\business;
 
 use app\common\lib\sms\AliSms;
+use app\common\lib\Num;
 
 class Sms {
-    public static function sendCode(string $phoneNumber) :bool {
+    public static function sendCode(string $phoneNumber, int $len) :bool {
 
-        $code = rand(100000, 999999); //生成6位验证码
+        $code = Num::getCode($len);
         $sms = AliSms::sendCode($phoneNumber, $code);
         if ($sms) {
             //如果短信发送成功，把短信验证码发送到redis中，并设置失效时间
