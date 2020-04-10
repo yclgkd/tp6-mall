@@ -49,7 +49,7 @@ class AliSms {
                     ],
                 ])
                 ->request();
-            print_r($result->toArray());
+            //print_r($result->toArray());
         } catch (ClientException $e) {
             return false;
             //echo $e->getErrorMessage() . PHP_EOL;

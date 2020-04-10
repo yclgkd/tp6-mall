@@ -16,7 +16,7 @@ class Sms {
         $sms = AliSms::sendCode($phoneNumber, $code);
         if ($sms) {
             //如果短信发送成功，把短信验证码发送到redis中，并设置失效时间
-            cache("")
+            cache(config("redis.code_pre").$phoneNumber, $code, config("redis.code_expire"));
         }
         return true;
     }

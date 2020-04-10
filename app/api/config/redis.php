@@ -5,6 +5,6 @@
  * Time: 16:18
  */
 return [
-    "code_pre" => "mall_code_pre",
+    "code_pre" => "mall_code_pre_",
     "code_expire" => 60,
 ];
