@@ -11,7 +11,7 @@ use AlibabaCloud\Client\Exception\ClientException;
 use AlibabaCloud\Client\Exception\ServerException;
 use think\facade\Log;
 
-class AliSms {
+class AliSms implements SmsBase {
     /**
      * 阿里云发送短信验证码的场景
      * @param string $phone
