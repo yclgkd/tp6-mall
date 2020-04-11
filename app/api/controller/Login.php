@@ -25,6 +25,9 @@ class Login extends BaseController {
             return show(config('status.error'), $validate->getError());
         }
         $result = (new \app\common\business\User())->login($data);
+        if ($result) {
+            return show(config('status.success'), "登录成功", $result);
+        }
         return show(config('status.error'), "登录失败");
     }
 }

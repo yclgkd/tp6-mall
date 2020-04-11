@@ -12,21 +12,17 @@ use think\Model;
 class User extends Model
 {
     /**
-     * 根据用户名获取后端表的数据
-     * getAdminUserByUsername
-     * @param $username 用户名
-     * @return array|bool|Model|null
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * 自动生成写入时间
+     * @var bool
      */
-    public function getAdminUserByUsername($username)
+    protected $autoWriteTimestamp = true;
+    public function getUserByPhoneNumber($phoneNumber)
     {
-        if (empty($username)) {
+        if (empty($phoneNumber)) {
             return false;
         }
         $where = [
-            "username" => $username,
+            "phone_number" => $phoneNumber,
         ];
         return $this->where($where)->find();
     }
