@@ -28,6 +28,22 @@ class User extends Model
     }
 
     /**
+     * 通过ID获取用户数据
+     * @param $id
+     * @return array|bool|Model|null
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getUserById($id) {
+        $id = intval($id);
+        if (!$id) {
+            return false;
+        }
+        return $this->find($id);
+    }
+
+    /**
      * 根据主键ID更新数据表中的数据
      * @param $id
      * @param $data

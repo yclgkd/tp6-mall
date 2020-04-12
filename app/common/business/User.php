@@ -18,7 +18,7 @@ class User {
     public function login($data) {
         $redisCode = cache(config("redis.code_pre").$data['phone_number']);
         if (empty($redisCode) || $redisCode != $data['code']) {
-            //throw new \think\Exception("不存在该验证码", -1009);
+            throw new \think\Exception("不存在该验证码", -1009);
         }
         //用户表中是否有用户记录， 根据phone_number查询
         //生成token
@@ -50,11 +50,27 @@ class User {
         }
         $token = Str::getLoginToken($data['phone_number']);
         $redisData = [
-            "Id" => $userId,
+            "id" => $userId,
             "username" => $username,
         ];
         $res = cache(config("redis.token_pre").$token, $redisData, Time::userLoginExpiresTime($data['type']));
 
         return $res ? ["token" => $token, "username" => $username] : false;
+    }
+
+    /**
+     * 返回正常用户数据
+     * @param $id
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getNormalUserById($id) {
+        $user = $this->userObj->getUserById($id);
+        if (!$user || $user->status != config("status.mysql.table_normal")) {
+            return [];
+        }
+        return $user->toArray();
     }
 }

@@ -31,7 +31,7 @@ class Login extends BaseController {
         try {
             $result = (new \app\common\business\User())->login($data);
         }catch (\Exception $e) {
-            return show(config($e->getCode()), "登录失败");
+            return show($e->getCode(), "登录失败");
         }
         if ($result) {
             return show(config('status.success'), "登录成功", $result);
