@@ -27,6 +27,17 @@ class User extends Model
         return $this->where($where)->find();
     }
 
+    public function getUserByUsername($username)
+    {
+        if (empty($username)) {
+            return false;
+        }
+        $where = [
+            "username" => $username,
+        ];
+        return $this->where($where)->find();
+    }
+
     /**
      * 通过ID获取用户数据
      * @param $id
