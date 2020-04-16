@@ -19,10 +19,10 @@ class Category {
     public function add($data) {
         $data['status'] = config("status.mysql.table_normal");
         $name = $data['name'];
+        // 根据$name去数据库查询是否存在这条记录
         if ($this->categoryObj->getCategoryByCategoryName($name)) {
             return show(config("status.error"), "分类名已存在");
         }
-        // 根据$name去数据库查询是否存在这条记录
         try {
             $this->categoryObj->save($data);
         } catch (\Exception $e) {
