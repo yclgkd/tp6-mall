@@ -18,7 +18,16 @@ class Category {
 
     public function add($data) {
         $data['status'] = config("status.mysql.table_normal");
-        $this->categoryObj->save($data);
+        $name = $data['name'];
+        if ($this->categoryObj->getCategoryByCategoryName($name)) {
+            return show(config("status.error"), "分类名已存在");
+        }
+        // 根据$name去数据库查询是否存在这条记录
+        try {
+            $this->categoryObj->save($data);
+        } catch (\Exception $e) {
+            throw new \think\Exception("服务内部异常");
+        }
         //返回最后一个新增ID
         return $this->categoryObj->getLastInsID();
     }

@@ -42,11 +42,11 @@ class User {
             //更新表
             $userId = $user->id;
             $username = $user->username;
-//            $updateData = [
-//                "update_time" => time(),
-//                "operate_user" => $username,
-//            ];
-//            $res = $this->userObj->updateById($data['phone_number'], $updateData);
+            $updateData = [
+                "update_time" => time(),
+                "operate_user" => $username,
+            ];
+            $this->userObj->updateById($userId, $updateData);
         }
         $token = Str::getLoginToken($data['phone_number']);
         $redisData = [

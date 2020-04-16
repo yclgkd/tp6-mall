@@ -15,5 +15,8 @@ class Category extends Model {
      * @var bool
      */
     protected $autoWriteTimestamp = true;
-
+    public function getCategoryByCategoryName($name) {
+        $results = $this->where("name", $name)
+           ->find();
+    }
 }
