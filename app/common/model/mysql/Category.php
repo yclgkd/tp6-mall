@@ -17,6 +17,15 @@ class Category extends Model {
     protected $autoWriteTimestamp = true;
     public function getCategoryByCategoryName($name) {
         $results = $this->where("name", $name)
-           ->find();
+           ->select()->toArray();
+        return $results;
+    }
+
+    public function getNormalCategories($field = "*") {
+        $where = [
+            "status" => config("status.mysql.table_normal"),
+        ];
+        $result = $this->where($where)->field($field)->select();
+        return $result;
     }
 }

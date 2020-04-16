@@ -21,7 +21,7 @@ class Category {
         $name = $data['name'];
         // 根据$name去数据库查询是否存在这条记录
         if ($this->categoryObj->getCategoryByCategoryName($name)) {
-            return show(config("status.error"), "分类名已存在");
+           throw new \think\Exception("分类名已存在");
         }
         try {
             $this->categoryObj->save($data);
@@ -30,5 +30,14 @@ class Category {
         }
         //返回最后一个新增ID
         return $this->categoryObj->getLastInsID();
+    }
+
+    public function getNormalCategories() {
+        $field = "id, name, pid";
+        $categories = $this->categoryObj->getNormalCategories($field);
+        if (!$categories) {
+            $categories = [];
+        }
+        return $categories->toArray();
     }
 }

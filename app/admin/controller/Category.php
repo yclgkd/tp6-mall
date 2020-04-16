@@ -15,9 +15,20 @@ class Category extends AdminBase {
     }
 
     public function add() {
-        return View::fetch();
+        try {
+            $categories = (new CategoryBus())->getNormalCategories();
+        } catch (\Exception $e) {
+            $categories = [];
+        }
+        return View::fetch("",
+            [
+                "categories" => json_encode($categories),
+            ]);
     }
 
+    /**
+     * 新增分类
+     */
     public function save() {
         $pid = input("param.pid", "", "trim");
         $name = input("param.name", "", "trim");
