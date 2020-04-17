@@ -28,4 +28,16 @@ class Category extends Model {
         $result = $this->where($where)->field($field)->select();
         return $result;
     }
+
+    public function getLists($where, $num = 10) {
+        $order = [
+            "listorder" => "desc",
+            "id" => "desc",
+        ];
+        $result = $this->where("status", "<>", config("status.mysql.table_delete"))
+            ->where($where)
+            ->order($order)
+            ->paginate($num);
+        return $result;
+    }
 }

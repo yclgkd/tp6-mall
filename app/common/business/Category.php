@@ -36,8 +36,18 @@ class Category {
         $field = "id, name, pid";
         $categories = $this->categoryObj->getNormalCategories($field);
         if (!$categories) {
-            $categories = [];
+            return [];
         }
         return $categories->toArray();
+    }
+
+    public function getLists($data, $num) {
+        $list = $this->categoryObj->getLists($data, $num);
+        if (!$list) {
+            return [];
+        }
+        $result = $list->toArray();
+        $result['render'] = $list->render();
+        return $result;
     }
 }

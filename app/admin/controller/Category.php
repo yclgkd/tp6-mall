@@ -11,7 +11,18 @@ use app\common\business\Category as CategoryBus;
 
 class Category extends AdminBase {
     public function index() {
-        return View::fetch();
+        $pid = input("param.pid", "", "intval");
+        $data = [
+            'pid' => $pid,
+        ];
+        try {
+            $categories = (new CategoryBus())->getLists($data, 5);
+        } catch (\Exception $e) {
+            $categories = [];
+        }
+        return View::fetch("", [
+            "categories" => $categories,
+        ]);
     }
 
     public function add() {
