@@ -97,20 +97,20 @@
                 </tbody>
             </table>
         </div>
-        <div>{$categories.render|raw}</div>
+<!--        <div>{$categories.render|raw}</div>-->
         <div id="pages"></div>
     </div>
 
 </div>
-<style>
-    .pagination li{
-        display: inline;
-        padding-left: 10px;
-    }
-    .pagination .active{
-        color: red;
-    }
-</style>
+<!--<style>-->
+<!--    .pagination li{-->
+<!--        display: inline;-->
+<!--        padding-left: 10px;-->
+<!--    }-->
+<!--    .pagination .active{-->
+<!--        color: red;-->
+<!--    }-->
+<!--</style>-->
 <script src="{__STATIC_PATH}admin/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
 <script src="{__STATIC_PATH}admin/lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
 <script src="{__STATIC_PATH}admin/js/common.js?v5" charset="utf-8"></script>
@@ -122,8 +122,15 @@
 
         laypage.render({ //分页
             elem: 'pages'
-            , count: 100
+            , count: {$categories.total}
             , theme: '#FFB800'
+            , limit: {$categories.per_page}
+            , curr: {$categories.current_page}
+            , jump: function(obj, first){
+                if (!first) {
+                    location.href="?page=" + obj.curr;
+                }
+            }
         });
 
 
