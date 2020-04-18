@@ -49,6 +49,23 @@ class Category {
         }
         $result = $list->toArray();
         $result['render'] = $list->render();
+        //获取分类下的子分类
+        $pids = array_column($result['data'], "id");
+        if ($pids) {
+            $idCountResult = $this->model->getChildCountInPids(['pid' => $pids]);
+            $idCountResult = $idCountResult->toArray(); //如果没有的话返回空数组
+            $idCounts = [];
+            foreach ($idCountResult as $countResult) {
+                $idCounts[$countResult['pid']] = $countResult['count'];
+            }
+        }
+        if ($result['data']) {
+            foreach ($result['data'] as $k => $value) {
+                //$result['data'][$k]['childCount'] = isset($idCounts[$value['id']]) ? $idCounts[$value['id']] : 0;
+                $result['data'][$k]['childCount'] = $idCounts[$value['id']] ?? 0;
+            }
+        }
+
         return $result;
     }
 

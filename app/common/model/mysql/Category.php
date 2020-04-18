@@ -46,4 +46,15 @@ class Category extends Model {
         $data['update_time'] = time();
         return $this->where(["id" => $id])->save($data);
     }
+
+    public function getChildCountInPids($condition) {
+        $where[] = ["pid", "in", $condition['pid']];
+        $where[] = ["status", "<>", config("status.mysql.table_delete")];
+        $res = $this->where($where)
+            ->field(["pid", "count(*) as count"])
+            ->group("pid")
+            ->select();
+//        echo $this->getLastSql();exit();
+        return $res;
+    }
 }

@@ -89,7 +89,7 @@
                     <td>
                         <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete delete" data-ptype="1"
                            lay-event="delete" data-id="{$vo.id}">删除</a>
-                        <a href="{:url('index',['pid' => $vo.id])}">获取子栏目</a>
+                        <a class="layui-btn layui-btn-xs layui-btn-normal" href="{:url('index',['pid' => $vo.id])}">子栏目({$vo.childCount})</a>
                     </td>
                 </tr>
                 {/volist}
