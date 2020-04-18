@@ -80,4 +80,25 @@ class Category {
         }
         return $res;
     }
+
+    //更新状态
+    public function status($id, $status) {
+        $res = $this->getById($id);
+        if (!$res) {
+            throw new \think\Exception("不存在该条记录");
+        }
+        if ($res['status'] ==  $status) {
+            throw new \think\Exception("修改值与原数值不能一样");
+        }
+        $data = [
+            "status" => $status,
+        ];
+        try {
+            $res = $this->model->updateById($id, $data);
+        } catch (\Exception $e) {
+            //todo:记录日志
+            return false;
+        }
+        return $res;
+    }
 }

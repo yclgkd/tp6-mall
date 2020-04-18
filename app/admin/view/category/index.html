@@ -87,7 +87,7 @@
 
 
                     <td>
-                        <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete del-child" data-ptype="1"
+                        <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete delete" data-ptype="1"
                            lay-event="delete" data-id="{$vo.id}">删除</a>
                         <a href="{:url('index',['pid' => $vo.id])}">获取子栏目</a>
                     </td>
@@ -183,19 +183,17 @@
         }
 
         // 删除二级分类
-        $('.del-child').on('click', function () {
+        $('.delete').on('click', function () {
             let ptype = $(this).attr('data-ptype'); // fu
             let id = $(this).attr('data-id'); // fu
-            let msg = '';
-            if (ptype == 1) { // 等级类目
-                msg = '一';
-            } else if (ptype == 2) {
-                msg = '二';
-            }
-            layObj.box(`是否删除${msg}级分类`, () => {
-                let   url = '{:url("admin/del")}?id=' + id
+            layObj.box(`是否删除当前分类`, () => {
+                let   url = '{:url("status")}?id=' + id + "&status=99"
                 layObj.get(url,  (res) =>{
-                    $(this).parent().remove()
+                    if (res.status == 1) {
+                        window.location.reload()
+                    } else {
+                        layer.msg("删除失败");
+                    }
                 })
 
             })
