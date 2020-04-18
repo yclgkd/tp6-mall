@@ -80,8 +80,8 @@
                         {$vo.operate_user}
                     </td>
 
-                    <td data-id="1"><input type="checkbox" {if $vo.status == 1}checked{/if} name="status" lay-skin="switch"
-                                           lay-filter="switchTest"
+                    <td data-id="{$vo.id}"><input type="checkbox" {if $vo.status == 1}checked{/if} name="status" lay-skin="switch"
+                                           lay-filter="switchStatus"
                                            lay-text="ON|OFF">
                     </td>
 
@@ -140,15 +140,18 @@
         //});
 
         //监听状态 更改
-        form.on('switch(switchTest)', function (obj) {
-            console.log(obj.elem.checked, '改变状态')
+        form.on('switch(switchStatus)', function (obj) {
 
             let id = obj.othis.parent().attr('data-id');
             let status = obj.elem.checked ? 1 : 0;
             $.ajax({
-                url: '{:url("admin/change")}?id=' + id + '&status=' + status,
+                url: '{:url("category/status")}?id=' + id + '&status=' + status,
                 success: (res) => {
-
+                    if (res.status == 1) {
+                        window.location.reload()
+                    } else {
+                        layer.msg("更改失败");
+                    }
                 }
             });
             return false;
@@ -168,7 +171,7 @@
                 if (name && res) {
                     $(that).val(name)
                 }
-            })
+            });
             $.ajax({
                 url: '{:url("admin/edit")}?id=' + id + '&name=' + name,
                 success(res) {
@@ -205,10 +208,14 @@
             if(!val){
                 return;
             }
-            let url = '{:url("admin/sort")}?id=' + id + '&sort='+val;
+            let url = '{:url("category/listorder")}?id=' + id + '&listorder='+val;
             //let url = 'http:www.baidu.com';
             layObj.get(url,function (res) {
-                console.log(res, 'sort');
+                if (res.status == 1) {
+                    window.location.reload()
+                } else {
+                    layer.msg("排序失败");
+                }
             })
 
         })

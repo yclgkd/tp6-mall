@@ -40,4 +40,10 @@ class Category extends Model {
             ->paginate($num);
         return $result;
     }
+
+    //根据Id更新库里的数据
+    public function updateById($id, $data) {
+        $data['update_time'] = time();
+        return $this->where(["id" => $id])->save($data);
+    }
 }
