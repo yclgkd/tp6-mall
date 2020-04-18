@@ -42,6 +42,15 @@ class Category {
         return $categories->toArray();
     }
 
+    public function getNormalAllCategories() {
+        $field = "id as category_id, name, pid";
+        $categories = $this->model->getNormalCategories($field);
+        if (!$categories) {
+            return [];
+        }
+        return $categories->toArray();
+    }
+
     public function getLists($data, $num) {
         $list = $this->model->getLists($data, $num);
         if (!$list) {

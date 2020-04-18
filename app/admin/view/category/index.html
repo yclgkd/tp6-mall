@@ -128,7 +128,7 @@
             , curr: {$categories.current_page}
             , jump: function(obj, first){
                 if (!first) {
-                    location.href="?page=" + obj.curr;
+                    location.href="?page=" + obj.curr+"&pid={$pid}";
                 }
             }
         });
