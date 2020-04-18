@@ -22,4 +22,19 @@ class Arr {
         }
         return $tree;
     }
+
+    public static function sliceTreeArr($data, $firstCount = 5, $secondCount = 3, $threeCount = 5) {
+        $data = array_slice($data, 0, $firstCount);
+        foreach ($data as $k => $v) {
+            if (!empty($v['list'])) {
+                $data[$k]['list'] = array_slice($v['list'], 0, $secondCount);
+                foreach ($v['list'] as $kk => $vv) {
+                    if (!empty($vv['list'])) {
+                        $data[$k]['list'][$kk]['list'] = array_slice($vv['list'], 0, $threeCount);
+                    }
+                }
+            }
+        }
+        return $data;
+    }
 }
