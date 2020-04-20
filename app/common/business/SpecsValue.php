@@ -8,24 +8,11 @@ namespace app\common\business;
 
 use \app\common\model\mysql\SpecsValue as SpecsValueModel;
 
-class SpecsValue {
+class SpecsValue extends BusBase {
     public $model = NULL;
     public function __construct()
     {
         $this->model = new SpecsValueModel();
-    }
-
-    //新增
-    public function add($data) {
-        $data['status'] = 1;
-        //todo：根据name查询$name是否存在
-        try {
-            $this->model->save($data);
-        } catch (\Exception $e) {
-            //todo：记录日志
-            return 0;
-        }
-        return $this->model->id;
     }
 
     public function getBySpecsId($specsId) {
