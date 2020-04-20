@@ -23,4 +23,22 @@ class Image extends AdminBase {
         ];
         return show(config("status.success"), "图片上传成功", $imageUrl);
     }
+
+    public function layUpload() {
+        if (!$this->request->isPost()) {
+            return show(config("status.error"), "请求不合法");
+        }
+        $file = $this->request->file("file");
+        $filename = \think\facade\Filesystem::disk("public")->putFile("image", $file);
+        if (!$filename) {
+            return json(["code" => 1, "data" => []], 200);
+        }
+        $result = [
+            "code" => 0,
+            "data" => [
+                "src" => "/upload/" . $filename
+            ],
+        ];
+        return json($result, 200);
+    }
 }
