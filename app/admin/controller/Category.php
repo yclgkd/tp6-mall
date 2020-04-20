@@ -117,4 +117,18 @@ class Category extends AdminBase {
             return show(config("status.error"), "状态更新失败");
         }
     }
+
+    public function dialog() {
+        //获取正常的一级分类数据
+        $categories = (new CategoryBus)->getNormalByPid();
+        return view("", [
+            "categories" => json_encode($categories)
+        ]);
+    }
+
+    public function getByPid() {
+        $pid = input("param.pid", 0, "intval");
+        $categories = (new CategoryBus())->getNormalByPid($pid);
+        return show(config("status.success"), "OK", $categories);
+    }
 }

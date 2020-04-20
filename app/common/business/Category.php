@@ -127,4 +127,22 @@ class Category {
         }
         return $res;
     }
+
+    /**
+     * 获取一级分类的内容
+     * @param int $pid
+     * @param string $field
+     * @return array
+     */
+    public function getNormalByPid($pid = 0, $field = "id, name, pid") {
+        //$field = "id, name, pid";
+        try {
+            $res = $this->model->getNormalByPid($pid, $field);
+        } catch (\Exception $e) {
+            //todo: 记录日志
+            return [];
+        }
+        $res = $res->toArray();
+        return $res;
+    }
 }
