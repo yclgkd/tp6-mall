@@ -6,15 +6,7 @@
  */
 namespace app\common\model\mysql;
 
-use think\Model;
-
-class Category extends Model {
-
-    /**
-     * 自动生成时间
-     * @var bool
-     */
-    protected $autoWriteTimestamp = true;
+class Category extends ModelBase {
     public function getCategoryByCategoryName($name) {
         $results = $this->where("name", $name)
            ->select()->toArray();
@@ -46,12 +38,6 @@ class Category extends Model {
             ->order($order)
             ->paginate($num);
         return $result;
-    }
-
-    //根据Id更新库里的数据
-    public function updateById($id, $data) {
-        $data['update_time'] = time();
-        return $this->where(["id" => $id])->save($data);
     }
 
     public function getChildCountInPids($condition) {

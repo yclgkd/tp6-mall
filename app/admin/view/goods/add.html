@@ -12,7 +12,7 @@
     <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
     <script src="{__STATIC_PATH}admin/lib/layui-v2.5.4/layui.js?1" charset="utf-8"></script>
     <link rel="stylesheet" href="{__STATIC_PATH}admin/css/sku_style.css"/>
-    <script type="text/javascript" src="{__STATIC_PATH}admin/js/sku/createSkuTable.js?v19"></script>
+    <script type="text/javascript" src="{__STATIC_PATH}admin/js/sku/createSkuTable.js?v20"></script>
 </head>
 <body>
 <input type="hidden" id="imagesArr">
@@ -208,13 +208,14 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品详情</label>
                     <div class="layui-input-block">
-                       <textarea id="content" style="display: none;"  value=""></textarea>
+                        <textarea id="content" style="display: none;"  value=""></textarea>
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
+    <div>{:token_field()}</div>
     <div class="layui-form-item layui-form">
         <div class="layui-input-block">
             <button type="submit" class="layui-btn" id='btnSubmit' lay-submit="" lay-filter="goods_submit">立即提交</button>
@@ -222,9 +223,9 @@
     </div>
 
 </div>
-<script src="{__STATIC_PATH}admin/js/uploads.js?c11"></script>
+<script src="{__STATIC_PATH}admin/js/uploads.js?c113"></script>
 <script src="{__STATIC_PATH}admin/js/goods.js?c9"></script>
-<script src="{__STATIC_PATH}admin/js/common.js?b4"></script>
+<script src="{__STATIC_PATH}admin/js/common.js?b41"></script>
 <script>
     // 点击查看分类
     $('.change-type').on('click', function () {
@@ -247,9 +248,9 @@
         layedit.set({
             uploadImage: {
                 url: '{:url('image/layUpload')}',
-                type: 'post',
-            }
-        })
+            type: 'post',
+        }
+    })
 
         let edit_index = layedit.build('content')
 
@@ -292,15 +293,15 @@
             $('.del-' + el).remove()
 
             // 删除规格复选框栏
-           let input_id =  $(this).parent().prev().find('input').attr('data-id')
+            let input_id =  $(this).parent().prev().find('input').attr('data-id')
 
             $("ul[class*='SKU_TYPE']").each(function (i, item) {
-               let propid = $(this).find('li').attr('propid')
+                let propid = $(this).find('li').attr('propid')
                 if(propid == input_id){
                     $(this).next().next().remove()
                     $(this).next().remove()
                     $(this).remove()
-                   return false;
+                    return false;
                 }
             })
             // 规格赋值
@@ -326,6 +327,7 @@
                 big_image: $('#main_img').attr('src'),
                 carousel_image: images('banner_img'),
                 recommend_image: images('show_img'),
+                __token__:$("input[name='__token__']").val(),
                 skus: skus(),
                 description: layedit.getContent(edit_index),
                 add_spec_arr: addSpecArr() // 提交的规格数据
@@ -336,7 +338,10 @@
             // 发送ajax请求
             layObj.post(url, goods_data,  (res) =>{
                 if(res.status == 1) {
-                    layer.msg("商品新增成功");
+                    //layer.msg("商品新增成功");
+                    layer.msg("商品新增成功", function() {
+                        window.location="{:url('index')}";
+                    });
                 } else {
                     layer.msg("商品新增失败");
                 }
@@ -356,27 +361,27 @@
                     name: "颜色规格",
                     project: "红色,橘黄色,青色,灰色"
                 },
-                  {
-                      id: "2",
-                      name: "尺码",
-                      project: "265/m,270/m,275/m,280/m,285/m,290/m"
-                  }],
+                {
+                    id: "2",
+                    name: "尺码",
+                    project: "265/m,270/m,275/m,280/m,285/m,290/m"
+                }],
             skus: [
                 {
-                0: "红色",
-                1: "270/m",
-                2: "11",
-                3: "33",
-                4: "22",
-                propvalnames: {propvalids: "10,21", skuSellPrice: "11", skuMarketPrice: "22", skuStock: "33"}
-            }, {
-                0: "红色",
-                1: "275/m",
-                2: "44",
-                3: "666",
-                4: "55",
-                propvalnames: {propvalids: "10,22", skuSellPrice: "44", skuMarketPrice: "55", skuStock: "666"}
-            },
+                    0: "红色",
+                    1: "270/m",
+                    2: "11",
+                    3: "33",
+                    4: "22",
+                    propvalnames: {propvalids: "10,21", skuSellPrice: "11", skuMarketPrice: "22", skuStock: "33"}
+                }, {
+                    0: "红色",
+                    1: "275/m",
+                    2: "44",
+                    3: "666",
+                    4: "55",
+                    propvalnames: {propvalids: "10,22", skuSellPrice: "44", skuMarketPrice: "55", skuStock: "666"}
+                },
                 {
                     0: "青色",
                     1: "270/m",
@@ -512,7 +517,7 @@
         createTab()
     }
 
-   // 获取 url 参数 ，上线后 删除
+    // 获取 url 参数 ，上线后 删除
     function getRequest() {
         let url = location.search; //获取url中"?"符后的字串
         let theRequest = {};
