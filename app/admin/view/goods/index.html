@@ -16,12 +16,12 @@
         <fieldset class="layui-elem-field layuimini-search">
             <legend>搜索信息</legend>
             <div style="margin: 10px 10px 10px 10px">
-                <form class="layui-form layui-form-pane" action="{:url('index')}" method="GET">
+                <form class="layui-form layui-form-pane" action="{:url('index')}" method="get">
                     <div class="layui-form-item">
                         <div class="layui-inline">
                             <label class="layui-form-label">商品名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="title" autocomplete="off" class="layui-input">
+                                <input type="text" name="title" autocomplete="off" class="layui-input" >
                             </div>
                         </div>
 
@@ -30,13 +30,12 @@
                             <div class="layui-input-inline" style="width: 280px;">
                                 <div class="layui-input-inline" style="width: 280px;">
                                     <input type="text" name="time" class="layui-input" id="test10"
-                                           placeholder=" - ">
+                                           placeholder=" - " >
                                 </div>
                             </div>
                         </div>
                         <div class="layui-inline">
                             <button class="layui-btn" lay-submit="" lay-filter="data-search-btn">搜索</button>
-
                         </div>
                     </div>
                 </form>
@@ -74,49 +73,54 @@
                     </thead>
                     <tbody>
                     <!--一级类目循环-->
+                    {volist name="goods['data']" id="vo"}
                     <tr>
-                        <td>1</td>
+                        <td>{$vo.id}</td>
                         <td>
                             <div class="layui-input-inline layui-text-center">
                                 <input type="text" value="1" data-id="1" class="changeSort layui-input">
                             </div>
                         </td>
-                        <td>商品1</td>
+                        <td>{$vo.title}</td>
                         <td class="show-img">
-                            <img  src="../images/default.png" data-src=""  style="width: 24px;height: 24px;" />
+                            <img  src="{$vo.recommend_image}" data-src="{$vo.recommend_image}"  style="width: 24px;height: 24px;" />
                         </td>
-                        <td>123</td>
-                        <td>发布时间</td>
-                        <td><input type="checkbox" checked name="status" lay-skin="switch"
+                        <td>{$vo.stock}</td>
+                        <td>{$vo.create_time}</td>
+                        <td><input type="checkbox"  {if $vo.status == 1}checked{/if} name="status" lay-skin="switch"
                             lay-filter="switchStatus"
                             lay-text="开启|关闭"></td>
-                        <td><input type="checkbox" checked name="is_index_recommend" lay-skin="switch"
-                                   lay-filter="isIndexRecommend"
-                                   lay-text="是|否"></td>
+                        <td><input type="checkbox"  {if $vo.is_index_recommend == 1}checked{/if} name="is_index_recommend" lay-skin="switch"
+                            lay-filter="isIndexRecommend"
+                            lay-text="是|否"></td>
                         <td>
                             <a class="layui-btn layui-btn-xs  edit" lay-event="edit">编辑</a>
                             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete del-child" data-ptype="1"
-                                    lay-event="delete" data-id="$id">删除
+                               lay-event="delete" data-id="$id">删除
                             </a>
                         </td>
                     </tr>
+                    {/volist}
                     </tbody>
                 </table>
             </div>
         </div>
+        <div id="pages"></div>
     </div>
 </div>
 
 <script src="{__STATIC_PATH}admin/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
 <script src="{__STATIC_PATH}admin/lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+
 <script>
     // 显示图片
 
-    layui.use(['form', 'table', 'laydate','jquery','laypage'], function () {
+    layui.use(['form', 'table', 'laydate','jquery', 'laypage'], function () {
         var $ = layui.jquery,
             form = layui.form,
             laypage = layui.laypage,
-           laydate = layui.laydate;
+            laydate = layui.laydate;
+
 
         //日期时间范围 搜索
         laydate.render({
@@ -124,6 +128,29 @@
             , type: 'datetime'
             , range: true
         });
+
+        laypage.render({ //分页
+            elem: 'pages'
+            , count: {$goods.total}  // 新加的内容哦。
+            , limit: 5
+            , theme: '#FFB800'
+            //, curr: param['page']
+            ,curr: {$goods.current_page} // 完美解决哦。
+            //,hash: 'page' //自定义hash值
+            ,jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+
+                //首次不执行
+                if(!first){
+                    //do something
+                    location.href="?page="+obj.curr
+                }
+            }
+        });
+
+
+
+
 
         $('.show-img').on('click',function(){
             var imgurl=$(this).find('img').attr('data-src');

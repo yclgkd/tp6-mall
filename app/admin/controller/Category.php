@@ -18,7 +18,7 @@ class Category extends AdminBase {
         try {
             $categories = (new CategoryBus())->getLists($data, 5);
         } catch (\Exception $e) {
-            $categories = [];
+            $categories = \app\common\lib\Arr::getPaginateDefaultData(5);
         }
         return View::fetch("", [
             "categories" => $categories,

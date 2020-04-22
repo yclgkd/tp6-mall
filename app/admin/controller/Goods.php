@@ -10,24 +10,38 @@ use app\common\business\Goods as GoodsBis;
 
 class Goods extends AdminBase {
     public function index() {
-        return view();
+        $data = [];
+        $title = input("param.title", "", "trim");
+        $time = input("param.time", "", "trim");
+        if (!empty($title)) {
+            $data['title'] = $title;
+        }
+        if (!empty($time)) {
+            $data['create_time'] = explode(" - ", $time);
+        }
+        $goods = (new GoodsBis())->getLists($data, 5);
+        return view("", [
+            "goods" => $goods
+        ]);
     }
+
     public function add() {
         return view();
     }
 
     public function save() {
-        // 判断是否为post请求， 也可以通过在路由中做配置支持post即可，方法有很多就看同学们喜欢哪个。。。
+        // 判断是否为post请求
         if(!$this->request->isPost()) {
             return show(config('status.error'), "参数不合法");
         }
-        // 预留作业1：请大家仿照老师之前讲解的validate验证机制自行验证参数, 并且严格判断数据类型。
+        // todo：验证参数
         $data = input("param.");
-//        $check = $this->request->checkToken('__token__');
-//        if(!$check) {
-//            return show(config('status.error'), "非法请求");
-//        }
-        // 数据处理 = > 基于 我们得验证成功之后
+        //防止csrf攻击做一次校验
+        $check = $this->request->checkToken('__token__');
+        if(!$check) {
+            return show(config('status.error'), "非法请求");
+        }
+        // 数据处理 = > 基于验证成功之后
         $data['category_path_id'] = $data['category_id'];
         $result = explode(",", $data['category_path_id']);
         $data['category_id'] = end($result);
