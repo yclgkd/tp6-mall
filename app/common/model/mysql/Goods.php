@@ -31,4 +31,22 @@ class Goods extends ModelBase {
         //SELECT * FROM `mall_goods` WHERE `title` LIKE '%kk%' AND `create_time` BETWEEN 1587558000 AND 1587558120 AND `status` IN (0,1) ORDER BY `listorder` DESC,`id` DESC LIMIT 0,5
         return $list;
     }
+
+    public function getNormalGoodsByCondition($where, $field = true, $limit = 5) {
+        $order = ["listorder" => "desc", "id" => "decs"];
+        $where["status"] = config("status.success");
+        $result = $this->where($where)
+            ->order($order)
+            ->field($field)
+            ->limit($limit)
+            ->select();
+        return $result;
+    }
+
+    /**
+     * 图片获取，处理图片不同源的情况，使前端正常显示图片
+     */
+    public function getImageAttr($value) {
+        return request()->domain().$value;
+    }
 }
