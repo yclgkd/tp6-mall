@@ -119,7 +119,8 @@ class Category {
         try {
             $res = $this->model->updateById($id, $data);
         } catch (\Exception $e) {
-            // todo：记录日志
+            //记录日志
+            trace("Category-listorder-SeverException".$e->getMessage(), "error");
             return false;
         }
         return $res;
@@ -140,7 +141,8 @@ class Category {
         try {
             $res = $this->model->updateById($id, $data);
         } catch (\Exception $e) {
-            //todo:记录日志
+            //记录日志
+            trace("Category-status-SeverException".$e->getMessage(), "error");
             return false;
         }
         return $res;
@@ -157,7 +159,8 @@ class Category {
         try {
             $res = $this->model->getNormalByPid($pid, $field);
         } catch (\Exception $e) {
-            //todo: 记录日志
+            //记录日志
+            trace("Category-getNormalByPid-SeverException".$e->getMessage(), "error");
             return [];
         }
         $res = $res->toArray();
@@ -184,7 +187,8 @@ class Category {
             $categoryPath = explode(",", $res[0]['path']);
             //获取一级分类名称
             $categoryOne = array_slice($categoryPath, 0, 1);
-            $result["name"] = $this->model->getCategoryId($categoryOne, "name")
+            $result["name"] = $this->model
+                ->getCategoryId($categoryOne, "name")
                 ->toArray()[0]['name'];
             //获取定位点focus_ids
             $result["focus_ids"] = array_slice($categoryPath, 1);
@@ -194,15 +198,31 @@ class Category {
             //获取子分类list
             array_pop($categoryPath);
             if (count($categoryPath) == 0) {
-                $result['list'][0] = $this->model->getNormalByPid($categoryOne, "id, name")->toArray();
+                $result['list'][0] = $this->model
+                    ->getNormalByPid($categoryOne, "id, name")
+                    ->toArray();
             } else {
                 foreach ($categoryPath as $k => $v) {
-                    $result['list'][$k] = $this->model->getNormalByPid($v, "id, name")->toArray();
+                    $result['list'][$k] = $this->model
+                        ->getNormalByPid($v, "id, name")
+                        ->toArray();
                 }
             }
         } catch (\Exception $e) {
-            //todo:记录日志
+            //记录日志
+            trace("Category-search-SeverException".$e->getMessage(), "error");
             return Arr::search();
+        }
+        return $result;
+    }
+
+    public function sub($id) {
+        try {
+            $result =  $this->model->getNormalByPid($id, "id,name")->toArray();
+        } catch (\Exception $e) {
+            //记录日志
+            trace("Category-sub-SeverException".$e->getMessage(), "error");
+            return [];
         }
         return $result;
     }

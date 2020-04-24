@@ -28,7 +28,7 @@ class Category extends ApiBase {
     }
 
     /**
-     * api/category/search/51  todo:
+     * 请求格式api/category/search/51
      * 商品列表页面中 按栏目检索的内容
      * @return \think\response\Json
      */
@@ -39,17 +39,12 @@ class Category extends ApiBase {
     }
 
     /**
-     * 获取子分类  category/sub/2   todo:
+     * 获取子分类  category/sub/2
      * @return \think\response\Json
      */
     public function sub() {
-        $result = [
-            ["id" => 21, "name" => "点二到三分类1"],
-            ["id" => 22, "name" => "点二级三分类2"],
-            ["id" => 33, "name" => "点二到三分类3"],
-            ["id" => 134, "name" => "点二到三分类4"],
-            ["id" => 154, "name" => "点二到三分类5"],
-        ];
+        $id = input("param.id", 0, "intval");
+        $result = (new CategoryBis())->sub($id);
         return show(config("status.success"), "ok", $result);
     }
 }

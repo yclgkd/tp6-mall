@@ -36,7 +36,8 @@ class GoodsSku extends BusBase {
             return $result->toArray();
         }catch (\Exception $e) {
             ///echo $e->getMessage();exit;
-            // 记录日志
+            //记录日志
+            trace("GoodsSku-saveAll-SeverException".$e->getMessage(), "error");
             return false;
         }
     }

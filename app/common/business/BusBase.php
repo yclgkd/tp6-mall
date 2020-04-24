@@ -14,7 +14,8 @@ class BusBase {
         try {
             $this->model->save($data);
         } catch (\Exception $e) {
-            //todo：记录日志
+            //记录日志
+            trace("BusBase-add-SeverException".$e->getMessage(), "error");
             return 0;
         }
         return $this->model->id;

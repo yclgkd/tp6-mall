@@ -126,7 +126,8 @@ class Goods extends BusBase {
         try {
             $result = $this->model->getNormalGoodsFindInSetCategoryId($categoryId, $field);
         }catch (\Exception $e) {
-            //todo:记录日志
+            //记录日志
+            trace("Goods-getNormalGoodsFindInSetCategoryId-SeverException".$e->getMessage(), "error");
             return [];
         }
         return $result->toArray();
@@ -146,7 +147,8 @@ class Goods extends BusBase {
             ];
         }catch (\Exception $e) {
             ///echo $e->getMessage();exit;
-            // 演示之前的地方
+            //记录日志
+            trace("Goods-getNormalLists-SeverException".$e->getMessage(), "error");
             $result = [];
         }
         return $result;
