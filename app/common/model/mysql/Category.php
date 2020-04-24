@@ -65,4 +65,21 @@ class Category extends ModelBase {
             ->select();
         return $res;
     }
+
+    public function getCategoryTreeByPids($categoryIds) {
+        $order = [
+            "listorder" => "desc",
+            "id" => "desc"
+        ];
+        $field = "id as category_id, name, pid";
+        $where[] = ["id|pid", "in", $categoryIds];
+        $where[] = ["status", "=", config("status.mysql.table_normal")];
+        $res = $this->where($where)
+            ->order($order)
+            ->field($field)
+            ->select();
+        //echo $this->getLastSql();exit();
+        //SELECT `id`,`name`,`pid` FROM `mall_category` WHERE ( `id` IN (71,51) OR `pid` IN (71,51) ) AND `status` = 1 ORDER BY `listorder` DESC,`id` DESC
+        return $res;
+    }
 }

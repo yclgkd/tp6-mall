@@ -7,6 +7,11 @@
 namespace app\common\lib;
 
 class Arr {
+    /**
+     * 无限极分类
+     * @param $data
+     * @return array
+     */
     public static function getTree($data) {
         $items = array();
         foreach ($data as $v) {
@@ -14,9 +19,9 @@ class Arr {
         }
         $tree = [];
         foreach ($items as $id => $item) {
-            if (isset($items[$item['pid']])) {
-                $items[$item['pid']]['list'][] = &$items[$id];
-            } else {
+            if (isset($items[$item['pid']])) { //pid为非0值，即不是一级分类
+                $items[$item['pid']]['list'][] = &$items[$id]; //&:允许用两个变量来指向同一个内容
+            } else { //pid为0值，此分类是一级分类
                 $tree[] = &$items[$id];
             }
         }

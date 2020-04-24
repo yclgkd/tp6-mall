@@ -49,4 +49,17 @@ class Goods extends ModelBase {
     public function getImageAttr($value) {
         return request()->domain().$value;
     }
+
+    public function getNormalGoodsFindInSetCategoryId($categoryId, $field = true, $limit = 10) {
+        $order = ["listorder" => "desc", "id" => "decs"];
+        $result = $this->whereFindInSet("category_path_id", $categoryId)
+            ->where("status", "=", config("status.success"))
+            ->order($order)
+            ->field($field)
+            ->limit($limit)
+            ->select();
+        //echo $this->getLastSql();exit;
+        //SELECT sku_id as id,`title`,`price`,recommend_image as image FROM `mall_goods` WHERE FIND_IN_SET(71, `category_path_id`) AND `status` = 1 ORDER BY `listorder` DESC,`id` LIMIT 10
+        return $result;
+    }
 }

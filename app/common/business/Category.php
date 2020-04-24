@@ -8,6 +8,8 @@
 namespace app\common\business;
 
 use app\common\model\mysql\Category as CategoryModel;
+use app\common\lib\Arr;
+use think\model\relation\HasManyThrough;
 
 class Category {
     public $model = null;
@@ -144,5 +146,17 @@ class Category {
         }
         $res = $res->toArray();
         return $res;
+    }
+
+    public function getCategoryTreeByPids($categoryIds) {
+        if (!is_array($categoryIds)) {
+            return [];
+        }
+        $categoryInfo = $this->model->getCategoryTreeByPids($categoryIds);
+        $categoryInfo = $categoryInfo->toArray();
+        if (empty($categoryInfo)) {
+            return [];
+        }
+        return Arr::getTree($categoryInfo);
     }
 }

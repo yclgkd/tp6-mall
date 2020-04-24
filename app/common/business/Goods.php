@@ -92,4 +92,43 @@ class Goods extends BusBase {
         }
         return $result->toArray();
     }
+
+    /**
+     * 首页商品推荐
+     * @param $categoryIds
+     * @return array
+     */
+    public function categoryGoodsRecommend($categoryIds) {
+        if(!$categoryIds) {
+            return [];
+        }
+        // 分类以及子分类和分类下商品的获取 71 51  in category by  id or pid
+        $categoryTree = (new Category())->getCategoryTreeByPids($categoryIds);
+        if (empty($categoryTree)) {
+            return [];
+        }
+       $result = [];
+        foreach ($categoryTree as $k => $v) {
+            if (isset($v['pid'])) {
+                unset($v['pid']);
+            }
+            $result[$k]["categories"] = $v;
+        }
+        //防止key混乱，直接用result foreach
+        foreach ($result as $key => $value) {
+            $result[$key]["goods"] = $this->getNormalGoodsFindInSetCategoryId($value["categories"]["category_id"]);
+        }
+        return $result;
+    }
+
+    public function getNormalGoodsFindInSetCategoryId($categoryId) {
+        $field = "sku_id as id, title, price , recommend_image as image";
+        try {
+            $result = $this->model->getNormalGoodsFindInSetCategoryId($categoryId, $field);
+        }catch (\Exception $e) {
+            //todo:记录日志
+            return [];
+        }
+        return $result->toArray();
+    }
 }
