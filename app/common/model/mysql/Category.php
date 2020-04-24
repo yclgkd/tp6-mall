@@ -82,4 +82,15 @@ class Category extends ModelBase {
         //SELECT `id`,`name`,`pid` FROM `mall_category` WHERE ( `id` IN (71,51) OR `pid` IN (71,51) ) AND `status` = 1 ORDER BY `listorder` DESC,`id` DESC
         return $res;
     }
+
+    public function getCategoryId($id, $field = "*") {
+        $where = [
+            "id" => $id,
+            "status" => config("status.mysql.table_normal")
+        ];
+        $result = $this->where($where)
+            ->field($field)
+            ->select();
+        return $result;
+    }
 }

@@ -54,7 +54,6 @@ class Category extends ApiBase {
                 ],
             ],
         ];
-
         return show(config("status.success"), "ok", $result);
     }
 

@@ -9,6 +9,7 @@ namespace app\common\business;
 
 use app\common\model\mysql\Category as CategoryModel;
 use app\common\lib\Arr;
+use http\Exception\InvalidArgumentException;
 use think\model\relation\HasManyThrough;
 
 class Category {
@@ -19,20 +20,37 @@ class Category {
     }
 
     public function add($data) {
-        $data['status'] = config("status.mysql.table_normal");
-        $name = $data['name'];
-        // 根据$name去数据库查询是否存在这条记录
-        if ($this->model->getCategoryByCategoryName($name)) {
-           throw new \think\Exception("分类名已存在");
-        }
+        //开启事务
+        $this->model->startTrans();
         try {
+            $data['status'] = config("status.mysql.table_normal");
+            $name = $data['name'];
+            //获取他上级分类的path
+            $res = $this->model->getCategoryId($data['pid']);
+            $res = $res->toArray();
+            $path = $res[0]["path"];
+            // 根据$name去数据库查询是否存在这条记录
+            if ($this->model->getCategoryByCategoryName($name)) {
+                throw new \think\Exception("分类名已存在");
+            }
+            //首先保存分类名
             $this->model->save($data);
-        } catch (\Exception $e) {
+            //获取最后一个新增ID return $this->model->getLastInsID();
+            $id = $this->model->id;
+            $path = $path.",".$id;
+            $data = [
+                "path" => $path
+            ];
+            //通过拼接path，再做一次更新
+            $this->model->updateById($id, $data);
+            //事务提交
+            $this->model->commit();
+            return $id;
+        } catch (\think\Exception $e) {
+            //事务回滚
+            $this->model->rollback();
             throw new \think\Exception("服务内部异常");
         }
-        //返回最后一个新增ID
-        //return $this->model->getLastInsID();
-        return $this->model->id;
     }
 
     public function getNormalCategories() {
