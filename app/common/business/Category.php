@@ -9,8 +9,6 @@ namespace app\common\business;
 
 use app\common\model\mysql\Category as CategoryModel;
 use app\common\lib\Arr;
-use http\Exception\InvalidArgumentException;
-use think\model\relation\HasManyThrough;
 
 class Category {
     public $model = null;
