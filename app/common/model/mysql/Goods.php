@@ -62,4 +62,18 @@ class Goods extends ModelBase {
         //SELECT sku_id as id,`title`,`price`,recommend_image as image FROM `mall_goods` WHERE FIND_IN_SET(71, `category_path_id`) AND `status` = 1 ORDER BY `listorder` DESC,`id` LIMIT 10
         return $result;
     }
+
+    public function getNormalLists($data, $num = 10, $field = true, $order) {
+        $res = $this;
+        if(isset($data['category_path_id'])) {
+            $res = $this->whereFindInSet("category_path_id", $data['category_path_id']);
+        }
+        $list = $res->where("status", "=", config("status.mysql.table_normal"))
+            ->order($order)
+            ->field($field)
+            ->paginate($num);
+
+        //echo $this->getLastSql();exit;
+        return $list;
+    }
 }
