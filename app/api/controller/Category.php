@@ -33,27 +33,8 @@ class Category extends ApiBase {
      * @return \think\response\Json
      */
     public function search() {
-        $result = [
-            "name" => "我是一级分类",
-            "focus_ids" => [1, 11],
-            "list" => [
-                [
-                    ["id" => 1, "name" => "二级分类1"],
-                    ["id" => 2, "name" => "二级分类2"],
-                    ["id" => 3, "name" => "二级分类3"],
-                    ["id" => 4, "name" => "二级分类4"],
-                    ["id" => 5, "name" => "二级分类5"],
-                ],
-
-                [
-                    ["id" => 11, "name" => "三级分类1"],
-                    ["id" => 12, "name" => "三级分类2"],
-                    ["id" => 13, "name" => "三级分类3"],
-                    ["id" => 14, "name" => "三级分类4"],
-                    ["id" => 15, "name" => "三级分类5"],
-                ],
-            ],
-        ];
+        $id = input("param.id", 0, "intval");
+        $result = (new CategoryBis())->search($id);
         return show(config("status.success"), "ok", $result);
     }
 

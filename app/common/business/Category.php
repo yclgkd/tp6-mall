@@ -175,4 +175,35 @@ class Category {
         }
         return Arr::getTree($categoryInfo);
     }
+
+    public function search($id) {
+        try {
+            $result = [];
+            $res = $this->model->getCategoryId($id)->toArray();
+            // 获取path值
+            $categoryPath = explode(",", $res[0]['path']);
+            //获取一级分类名称
+            $categoryOne = array_slice($categoryPath, 0, 1);
+            $result["name"] = $this->model->getCategoryId($categoryOne, "name")
+                ->toArray()[0]['name'];
+            //获取定位点focus_ids
+            $result["focus_ids"] = array_slice($categoryPath, 1);
+            foreach ($result['focus_ids'] as $key => $value) {
+                $result['focus_ids'][$key] = intval($value);
+            }
+            //获取子分类list
+            array_pop($categoryPath);
+            if (count($categoryPath) == 0) {
+                $result['list'][0] = $this->model->getNormalByPid($categoryOne, "id, name")->toArray();
+            } else {
+                foreach ($categoryPath as $k => $v) {
+                    $result['list'][$k] = $this->model->getNormalByPid($v, "id, name")->toArray();
+                }
+            }
+        } catch (\Exception $e) {
+            //todo:记录日志
+            return Arr::search();
+        }
+        return $result;
+    }
 }
