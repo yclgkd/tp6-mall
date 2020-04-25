@@ -9,6 +9,7 @@ namespace app\common\business;
 use app\common\model\mysql\Goods as GoodsModel;
 use app\common\business\GoodsSku as GoodsSkuBis;
 use app\common\business\SpecsValue as SpecsValueBis;
+use \think\facade\Cache;
 
 class Goods extends BusBase {
     public $model = NULL;
@@ -167,22 +168,22 @@ class Goods extends BusBase {
             return [];
         }
         $goods = $goodsSku["goods"];
-        $skus = $skuBisObj->getSkusByGoodsId($goods['id']);
-        if (!$skus) {
-            return [];
-        }
-        $flagValue = ""; //标注值
-        foreach ($skus as $sv) {
-            if ($sv["id"] == $skuId) {
-                $flagValue = $sv["specs_value_ids"];
-            }
-        }
-        $gids = array_column($skus, "id", "specs_value_ids");
         if ($goods["goods_specs_type"] == 1) {
             //统一规格
             $sku = [];
         } else {
             //多规格
+            $skus = $skuBisObj->getSkusByGoodsId($goods['id']);
+            if (!$skus) {
+                return [];
+            }
+            $flagValue = ""; //标注值
+            foreach ($skus as $sv) {
+                if ($sv["id"] == $skuId) {
+                    $flagValue = $sv["specs_value_ids"];
+                }
+            }
+            $gids = array_column($skus, "id", "specs_value_ids");
             $sku = (new SpecsValueBis())->dealGoodsSkus($gids, $flagValue);
         }
         $result = [
@@ -202,6 +203,8 @@ class Goods extends BusBase {
                 "d2" => preg_replace('/(<img src=")(.*?)/', '$1'.request()->domain().'$2', $goods["description"])
             ],
         ];
+        //商品PV统计，记录数据到redis
+        Cache::inc("mall_pv_".$goods['id']);
         return $result;
     }
 }
