@@ -41,4 +41,32 @@ class GoodsSku extends BusBase {
             return false;
         }
     }
+
+    public function getNormalSkuAndGoods($id) {
+        try {
+            $result = $this->model->with("goods")->find($id);
+        } catch (\Exception $e) {
+            return [];
+        }
+        if (!$result) {
+            return [];
+        }
+        $result = $result->toArray();
+        if ($result["status"] != config("status.mysql.table_normal")) {
+            return [];
+        }
+        return $result;
+    }
+
+    public function getSkusByGoodsId($goodsId = 0) {
+        if (!$goodsId) {
+            return [];
+        }
+        try {
+            $skus = $this->model->getNormalByGoodsId($goodsId);
+        } catch (\Exception $e) {
+            return [];
+        }
+        return $skus->toArray();
+    }
 }

@@ -50,6 +50,17 @@ class Goods extends ModelBase {
         return request()->domain().$value;
     }
 
+    public function getCarouselImageAttr($value) {
+        if (!empty($value)) {
+            $value = explode(",", $value);
+            $value = array_map(function($v) {
+                return request()->domain().$v;
+            }, $value);
+            return $value;
+        }
+
+    }
+
     public function getNormalGoodsFindInSetCategoryId($categoryId, $field = true, $limit = 10) {
         $order = ["listorder" => "desc", "id" => "decs"];
         $result = $this->whereFindInSet("category_path_id", $categoryId)

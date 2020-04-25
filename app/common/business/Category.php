@@ -197,11 +197,11 @@ class Category {
             }
             //获取子分类list
             array_pop($categoryPath);
-            if (count($categoryPath) == 0) {
+            if (count($categoryPath) == 0) { //如果是一级分类则获取他下面的二级分类
                 $result['list'][0] = $this->model
                     ->getNormalByPid($categoryOne, "id, name")
                     ->toArray();
-            } else {
+            } else { //如果是二级和三级分类，则获取同pid的所有分类
                 foreach ($categoryPath as $k => $v) {
                     $result['list'][$k] = $this->model
                         ->getNormalByPid($v, "id, name")

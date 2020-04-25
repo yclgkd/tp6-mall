@@ -8,6 +8,7 @@ namespace app\common\business;
 
 use app\common\model\mysql\Goods as GoodsModel;
 use app\common\business\GoodsSku as GoodsSkuBis;
+use app\common\business\SpecsValue as SpecsValueBis;
 
 class Goods extends BusBase {
     public $model = NULL;
@@ -151,6 +152,56 @@ class Goods extends BusBase {
             trace("Goods-getNormalLists-SeverException".$e->getMessage(), "error");
             $result = [];
         }
+        return $result;
+    }
+
+    public function getGoodsDetailBySkuId($skuId) {
+        //sku_id sku表 => goods_id   goods表 => title,image,description
+        //goods_id sku表 => sku数据
+        $skuBisObj = new GoodsSkuBis();
+        $goodsSku = $skuBisObj->getNormalSkuAndGoods($skuId);
+        if (!$goodsSku) {
+            return [];
+        }
+        if (empty($goodsSku["goods"])) {
+            return [];
+        }
+        $goods = $goodsSku["goods"];
+        $skus = $skuBisObj->getSkusByGoodsId($goods['id']);
+        if (!$skus) {
+            return [];
+        }
+        $flagValue = ""; //标注值
+        foreach ($skus as $sv) {
+            if ($sv["id"] == $skuId) {
+                $flagValue = $sv["specs_value_ids"];
+            }
+        }
+        $gids = array_column($skus, "id", "specs_value_ids");
+        if ($goods["goods_specs_type"] == 1) {
+            //统一规格
+            $sku = [];
+        } else {
+            //多规格
+            $sku = (new SpecsValueBis())->dealGoodsSkus($gids, $flagValue);
+        }
+        $result = [
+            "title" => $goods["title"],
+            "price" => $goodsSku["price"],
+            "cost_price" => $goodsSku["cost_price"],
+            "sales_count" => 0,
+            "stock" => $goodsSku["stock"],
+            "gids" => $gids,
+            "image" => $goods["carousel_image"],
+            "sku" => $sku,
+            "detail" => [
+                "d1" => [
+                    "商品编码" => $goodsSku["id"],
+                    "上架时间" => $goodsSku["create_time"],
+                ],
+                "d2" => preg_replace('/(<img src=")(.*?)/', '$1'.request()->domain().'$2', $goods["description"])
+            ],
+        ];
         return $result;
     }
 }

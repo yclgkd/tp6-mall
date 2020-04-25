@@ -22,4 +22,10 @@ class SpecsValue extends Model {
             ->select();
         return $res;
     }
+
+    public function getNormalInIds($ids) {
+        return $this->whereIn("id", $ids)
+            ->where("status", "=", config("status.mysql.table_normal"))
+            ->select();
+    }
 }
