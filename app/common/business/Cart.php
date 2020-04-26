@@ -8,6 +8,7 @@ namespace app\common\business;
 
 use think\facade\Cache;
 use app\common\lib\Key;
+use app\common\lib\Arr;
 
 class Cart extends BusBase {
     public function insertRedis($userId, $id, $num) {
@@ -60,6 +61,10 @@ class Cart extends BusBase {
             $v["sku"] = $specsValues[$k] ?? "暂无规格";
             $result[] = $v;
         }
+        if (!empty($result)) {
+            //购物车排列，根据时间做倒序排序
+            $result = Arr::arrSortByKey($result, "create_time");
+        }
         return $result;
     }
 
@@ -80,8 +85,6 @@ class Cart extends BusBase {
             return FALSE;
         }
         return $res;
-
-        // 小伙伴请注意： 预留作业： 删除所有的购物车内容
     }
 
 

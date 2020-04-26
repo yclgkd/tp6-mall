@@ -84,4 +84,20 @@ class Arr {
         ];
         return $result;
     }
+
+    /**
+     * 数组根据关键词排序
+     * @param $result
+     * @param $key
+     * @param string $sort
+     * @return array
+     */
+    public static function arrSortByKey($result, $key, $sort = SORT_ASC) {
+        if (!is_array($result) || !$key) {
+            return [];
+        }
+        $column = array_column($result, $key);
+        array_multisort($column, $sort, $result);
+        return $result;
+    }
 }
