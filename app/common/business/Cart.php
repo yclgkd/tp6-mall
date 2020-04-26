@@ -62,4 +62,68 @@ class Cart extends BusBase {
         }
         return $result;
     }
+
+    /**
+     * 删除购物车功能
+     * @param $userId
+     * @param $id
+     * @return bool
+     */
+    public function deleteRedis($userId, $ids) {
+        if(!is_array($ids)) {
+            $ids = explode(",", $ids); // id=1  => [1]  ,  1,2 => [1, 2, 5,6]
+        }
+        try {
+            // ... 可变参数
+            $res = Cache::hDel(Key::userCart($userId), ...$ids);
+        }catch (\Exception $e) {
+            return FALSE;
+        }
+        return $res;
+
+        // 小伙伴请注意： 预留作业： 删除所有的购物车内容
+    }
+
+
+    /**
+     * 更新购物车中的商品数量
+     * @param $userId
+     * @param $id
+     * @param $num
+     * @return bool
+     * @throws \think\Exception
+     */
+    public function updateRedis($userId,  $id, $num) {
+        try {
+            $get = Cache::hGet(Key::userCart($userId), $id);
+        }catch (\Exception $e) {
+            return FALSE;
+        }
+        if($get) {
+            $get = json_decode($get, true);
+            $get['num'] = $num;
+        } else {
+            throw new \think\Exception("不存在该购物车的商品，更新没有任何意义");
+        }
+        try {
+            $res = Cache::hSet(Key::userCart($userId), $id, json_encode($get));
+        }catch (\Exception $e) {
+            return FALSE;
+        }
+        return $res;
+    }
+
+    /**
+     * 获取购物车数据
+     * @param $userId
+     * @return int
+     */
+    public function getCount($userId) {
+        try {
+            $count = Cache::hLen(Key::userCart($userId));
+        }catch (\Exception $e) {
+            return 0;
+        }
+        return intval($count);
+    }
 }
