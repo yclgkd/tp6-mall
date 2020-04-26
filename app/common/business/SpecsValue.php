@@ -81,4 +81,27 @@ class SpecsValue extends BusBase {
         }
         return $res;
     }
+
+    public function dealSpecsValue($skuIdSpecsValueIds) {
+        $ids = array_values($skuIdSpecsValueIds);
+        $ids = implode(",", $ids);
+        $ids = array_unique(explode(",", $ids));
+        $result = $this->getNormalInIds($ids);
+        if (!$result) {
+            return [];
+        }
+        $res = [];
+        foreach ($skuIdSpecsValueIds as $skuId => $specs) {
+            //1, 7
+            $specs = explode(",", $specs);
+            //[1, 7]
+            //处理sku默认文案
+            $skuStr = [];
+            foreach ($specs as $spec) {
+                $skuStr[] = $result[$spec]["specs_name"].":".$result[$spec]["name"];
+            }
+            $res[$skuId] = implode("  ", $skuStr);
+        }
+        return $res;
+    }
 }

@@ -6,12 +6,7 @@
  */
 namespace app\common\model\mysql;
 
-use think\Model;
-
-class SpecsValue extends Model {
-    //自动写入时间
-    protected $autoWriteTimestamp = true;
-
+class SpecsValue extends ModelBase {
     public function getNormalBySpecsId($specsId, $field = "*") {
         $where = [
             "specs_id" => $specsId,
@@ -21,11 +16,5 @@ class SpecsValue extends Model {
             ->field($field)
             ->select();
         return $res;
-    }
-
-    public function getNormalInIds($ids) {
-        return $this->whereIn("id", $ids)
-            ->where("status", "=", config("status.mysql.table_normal"))
-            ->select();
     }
 }

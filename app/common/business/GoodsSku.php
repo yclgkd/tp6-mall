@@ -69,4 +69,13 @@ class GoodsSku extends BusBase {
         }
         return $skus->toArray();
     }
+
+    public function getNormalInIds($ids) {
+        try {
+            $result = $this->model->getNormalInIds($ids);
+        } catch (\Exception $e) {
+            return [];
+        }
+        return $result->toArray();
+    }
 }

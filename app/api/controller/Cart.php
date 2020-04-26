@@ -31,4 +31,12 @@ class Cart extends AuthBase {
         }
         return Show::success();
     }
+
+    public function lists() {
+        $res = (new CartBis())->lists($this->userId);
+        if ($res ===FALSE) {
+            return Show::error();
+        }
+        return Show::success($res);
+    }
 }
