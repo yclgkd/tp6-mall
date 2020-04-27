@@ -78,4 +78,14 @@ class GoodsSku extends BusBase {
         }
         return $result->toArray();
     }
+
+    public function updateStock($data) {
+        // 10 sku_id stock  1 => 10 2= > 4  2 1  1 =>   9 3
+        // todo:批量更新方式去处理
+        //减库存
+        foreach($data as $value) {
+            $this->model->decStock($value['id'], $value['num']);
+        }
+        return true;
+    }
 }

@@ -18,4 +18,10 @@ class GoodsSku extends ModelBase {
         ];
         return $this->where($where)->select();
     }
+
+    public function  decStock($id, $num) {
+        return $this->where("id", "=", $id)
+            ->dec("stock", $num)
+            ->update();
+    }
 }

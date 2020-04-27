@@ -62,12 +62,16 @@ class Cart extends BusBase {
         $skuIdSpecsValueIds = array_column($skus, "specs_value_ids", "id");
         $specsValues = (new SpecsValue())->dealSpecsValue($skuIdSpecsValueIds);
         foreach ($res as $k => $v) {
+            $price = $skuIdPrice[$k] ?? 0;
             $v = json_decode($v, true);
-            $v["id"] = $k;
-            //对图片的url地址做转换
-            $v["image"] = preg_match("/http:\/\//", $v["image"]) ? $v["image"] : request()->domain().$v["image"];
-            $v["price"] = $skuIdPrice[$k] ?? 0;
-            $v["sku"] = $specsValues[$k] ?? "暂无规格";
+            if($ids && isset($stocks[$k]) && $stocks[$k] < $v['num']) { //如果不存在或者商品数量不够
+                throw new \think\Exception($v['title']."的商品库存不足");
+            }
+            $v['id'] = $k;
+            $v['image'] = preg_match("/http:\/\//", $v['image']) ? $v['image'] : request()->domain().$v['image'];
+            $v['price'] = $price;
+            $v['total_price'] = $price * $v['num'];
+            $v['sku'] = $specsValues[$k] ?? "暂无规则";
             $result[] = $v;
         }
         if (!empty($result)) {
