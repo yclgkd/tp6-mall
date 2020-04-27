@@ -133,6 +133,7 @@ class Order extends BusBase {
         if($delRedis) {
             echo "订单id:{$result[0]}在规定时间内没有完成支付 我们判定为无效订单删除".PHP_EOL;
             /**
+             * @todo :
              * 第一步： 根据订单ID 去数据库order表里面获取当前这条订单数据 看下当前状态是否是待支付:status = 1
              *        如果是那么我们需要把状态更新为 已取消 status = 7， 否则不需要care
              *
