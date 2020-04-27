@@ -33,7 +33,8 @@ class Cart extends AuthBase {
     }
 
     public function lists() {
-        $res = (new CartBis())->lists($this->userId);
+        $ids = input("param.id", "", "trim");
+        $res = (new CartBis())->lists($this->userId, $ids);
         if ($res ===FALSE) {
             return Show::error();
         }

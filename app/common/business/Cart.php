@@ -37,9 +37,18 @@ class Cart extends BusBase {
         return $res;
     }
 
-    public function lists($userId) {
+    public function lists($userId, $ids) {
         try {
-            $res = Cache::hGetAll(Key::UserCart($userId));
+            if ($ids) { //如果有id获取选中的id商品，在购物车和订单页面都适用
+                $ids = explode(",", $ids);
+                $res = Cache::hMget(Key::UserCart($userId), $ids);
+                // 判断非法用户获取数据
+                if (in_array(FALSE, array_values($res))) {
+                    return [];
+                }
+            } else { //如果没有id，获取所有商品
+                $res = Cache::hGetAll(Key::UserCart($userId));
+            }
         } catch (\Exception $e) {
             $res = [];
         }
