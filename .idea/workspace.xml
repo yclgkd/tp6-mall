@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0263cf03-0264-4a3b-8ed5-10b988cd65f6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/.example.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/.travis.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/LICENSE.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/app/.htaccess" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/app/AppService.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/app/BaseController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/app/ExceptionHandle.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/app/Request.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/app/common.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/app/controller/Index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/app/event.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/app/middleware.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/app/provider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/app/service.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/composer.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/composer.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/config/app.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/config/cache.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/config/console.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/config/cookie.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/config/database.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/config/filesystem.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/config/lang.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/config/log.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/config/middleware.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/config/route.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/config/session.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/config/trace.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/config/view.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/extend/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/public/.htaccess" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/public/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/public/router.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/public/static/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/route/app.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/runtime/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/think" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tp6_mall_pay/view/README.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/tp6_mall_pay/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/composer" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/league/flysystem" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/league/flysystem-cached-adapter" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/symfony/polyfill-php72" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/topthink/framework" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/topthink/think-orm" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/topthink/think-helper" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/topthink/think-trace" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/opis/closure" />
+    </include_path>
+  </component>
+  <component name="ProjectId" id="1bIfyy8p6C6HQVeHjumENJt4gxh" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tp6_mall_php" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0263cf03-0264-4a3b-8ed5-10b988cd65f6" name="Default Changelist" comment="" />
+      <created>1588324786865</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1588324786865</updated>
+      <workItem from="1588324798641" duration="38000" />
+      <workItem from="1588330806044" duration="14000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1588324834933">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1588324834933" />
+  </component>
+</project>

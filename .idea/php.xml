@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/composer" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/league/flysystem" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/league/flysystem-cached-adapter" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/symfony/polyfill-php72" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/topthink/framework" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/topthink/think-orm" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/topthink/think-helper" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/topthink/think-trace" />
+      <path value="$PROJECT_DIR$/tp6_mall_pay/vendor/opis/closure" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
+</project>
