@@ -24,7 +24,7 @@ class Sms extends BaseController {
 
         //短信流量控制分发
         //$rand_num = rand(0,99);
-        //if(($rand_num < 40) {
+        //if($rand_num < 40) {
             //40%使用阿里云短信验证
             //调用business层的数据
             if (SmsBus::sendCode($phoneNumber, 6, "ali")) {

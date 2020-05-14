@@ -125,6 +125,7 @@ class Order extends BusBase {
         }
 
         try {
+            //删除redis中的数据
             $delRedis = Cache::store('redis')->zRem("order_status", $result[0]);
         }catch (\Exception $e) {
             // 记录日志
