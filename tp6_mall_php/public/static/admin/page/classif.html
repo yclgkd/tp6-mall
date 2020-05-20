@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        .inoutCls {
+            height: 22px;
+            line-height: 22px;
+            padding: 0 5px;
+            font-size: 12px;
+            background-color: #1E9FFF;
+            max-width: 80px;
+            border: none;
+            color: #fff;
+            margin-left: 10px;
+            display: inline-block;
+            white-space: nowrap;
+            text-align: center;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <button type="button" class="layui-btn add">添 加</button>
+
+        <div class="layui-form" style="margin-top: 20px;">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="90">
+                    <col width="110">
+                    <col width="800">
+                    <col width="130">
+                    <col width="70">
+                    <col width="85">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>一级分类</th>
+                    <th class="text-center">二 / 三级分类</th>
+                    <th class="text-center">创建时间</th>
+                    <th class="text-center">状 态</th>
+                    <th>操作管理</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--一级类目循环-->
+                <tr>
+                    <td>
+                        <div class="layui-input-inline">
+                          <input type="text" value="1" data-id="1" class="changeSort layui-input">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="layui-input-inline">
+                            <input type="text" name="p0" autocomplete="off" class="layui-input" value="一级类目"
+                                   onchange="editCls(this,id=1,ptype=1)">
+                        </div>
+                    </td>
+                    <td>
+                        <!--二级类目循环 start-->
+                        <div class="layui-input-block" style="margin-left: 0;">
+                            <button data-ptype="2" type="button"
+                                    class="layui-btn layui-btn-primary layui-btn-sm del-child"
+                                    style="border: none;"><i class="layui-icon"></i></button>
+                            <div class="layui-input-inline">
+                                <input type="text" name="p1" style="background: #ffb800;" autocomplete="off"
+                                       class="inoutCls" onchange="editCls(this,id=1,ptype=2)" value="二级类目">
+                            </div>
+
+                            <!-- 三级类目循环 start-->
+                            <div class="layui-input-inline">
+                                --<input type="text" name="p1" autocomplete="off" class="inoutCls"
+                                         onchange="editCls(this,id=1,ptype=3)" value="1。1">
+                            </div>
+                            <div class="layui-input-inline">
+                                --<input type="text" name="p1" autocomplete="off" class="inoutCls"
+                                         onchange="editCls(this,id=1,ptype=3)" value="1。2">
+                            </div>
+                            <div class="layui-input-inline">
+                                --<input type="text" name="p1" autocomplete="off" class="inoutCls"
+                                         onchange="editCls(this,id=1,ptype=3)" value="1。3">
+                            </div>
+                            <!-- 三级类目循环 end-->
+                        </div>
+
+                        <!--二级类目循环 end-->
+                    </td>
+                    <td>2019-11-20 10:40</td>
+
+                    <td data-id="1"><input type="checkbox" checked="" name="status" lay-skin="switch"
+                                           lay-filter="switchTest"
+                                           lay-text="ON|OFF">
+                    </td>
+
+
+                    <td>
+                        <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete del-child" data-ptype="1"
+                           lay-event="delete" data-id="$id">删除</a>
+                    </td>
+                </tr>
+                <!--一级类目循环 end-->
+                </tbody>
+            </table>
+        </div>
+        <div id="pages"></div>
+    </div>
+
+</div>
+<script src="../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+<script src="../js/common.js?v5" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use(['form', 'laypage'], function () {
+        var form = layui.form
+            , laypage = layui.laypage;
+
+        laypage.render({ //分页
+            elem: 'pages'
+            , count: 100
+            , theme: '#FFB800'
+        });
+
+
+        // 添加 分类
+        $('.add').on('click', function () {
+            layObj.dialog('dialog.html')
+        });
+
+        //监听状态 更改
+        form.on('switch(switchTest)', function (obj) {
+            console.log(obj.elem.checked, '改变状态')
+
+            let id = obj.othis.parent().attr('data-id');
+            let status = obj.elem.checked ? 1 : 0;
+            $.ajax({
+                url: '{:u("admin/change")}?id=' + id + '&status=' + status,
+                success: (res) => {
+
+                }
+            });
+            return false;
+        });
+
+
+        function editCls(that, id, type) { // 分类修改  type 是 1 顶级  2级  3级
+            let name = $(that).val();
+            if (!name && (type == 1 || type == 2)) {
+                return layObj.msg('分类名称不能为空')
+            }
+            if (!name && type == 3) { // 演示 应该放到修改回调中  进行处理
+                return $(that).parent().remove()
+            }
+            let   url = '{:u("admin/edit")}?id=' + id + '&name=' + name
+            layObj.get(url,  (res) =>{
+                if (name && res) {
+                    $(that).val(name)
+                }
+            })
+            $.ajax({
+                url: '{:u("admin/edit")}?id=' + id + '&name=' + name,
+                success(res) {
+                    if (name && res) {
+                        $(that).val(name)
+                    }
+                }
+            })
+        }
+
+        // 删除二级分类
+        $('.del-child').on('click', function () {
+            let ptype = $(this).attr('data-ptype'); // fu
+            let id = $(this).attr('data-id'); // fu
+            let msg = '';
+            if (ptype == 1) { // 等级类目
+                msg = '一';
+            } else if (ptype == 2) {
+                msg = '二';
+            }
+            layObj.box(`是否删除${msg}级分类`, () => {
+                let   url = '{:u("admin/del")}?id=' + id
+                layObj.get(url,  (res) =>{
+                    $(this).parent().remove()
+                })
+
+            })
+        })
+
+        $('.changeSort').on('change',function () {
+            let id = $(this).attr('data-id');
+            let val = $(this).val();
+
+            if(!val){
+                return;
+            }
+            // let url = '{:u("admin/sort")}?id=' + id + '&sort='+val;
+            let url = 'http:www.baidu.com';
+            layObj.get(url,function (res) {
+                console.log(res, 'sort');
+            })
+
+        })
+
+
+    })
+</script>
+</body>
+</html>

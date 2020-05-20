@@ -1,0 +1,177 @@
+.layui-form-item .layui-input-inline {
+    width: 280px;
+}
+
+.layui-input-new {
+    width: 140px !important;
+    height: 31px !important;
+}
+
+.input-new-child {
+    width: 80px !important;
+    height: 30px !important;
+    display: inline-block;
+}
+
+
+.left-child {
+    margin-left: 26px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.hide {
+    display: none;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.control-group {
+    overflow: hidden;
+}
+
+.control-group a {
+    color: #666;
+    text-decoration: none;
+}
+
+.control-group a:hover {
+    text-decoration: underline;
+}
+
+.control-label {
+    float: left;
+    width: 100px;
+    line-height: 24px;
+}
+
+.controls {
+    overflow: hidden;
+}
+
+.controls input[type="text"] {
+    border: 1px solid #ddd;
+    height: 20px;
+    width: 120px;
+}
+
+.controls input[type="button"] {
+    margin-top: 10px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.config_item {
+    margin-top: 10px;
+    border: 1px dashed #ddd;
+    padding: 10px;
+}
+
+.config_item section {
+    margin-top: 10px;
+}
+
+.config_item section span {
+    margin-right: 16px;
+}
+
+.config_item input[type="text"] {
+    width: 80px;
+    text-align: center;
+}
+
+.choose_config .Father_Title {
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 0;
+    font-size: 16px;
+    font-weight: normal;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.choose_config .Father_Item {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+    list-style: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.choose_config .Father_Item li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.columnList th {
+    background-color: #eee;
+}
+
+.columnList th, .columnList td {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    line-height: 24px;
+    text-align: center;
+}
+
+input[type=checkbox] {
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    vertical-align: center;
+    background: #fff;
+    border: 1px solid #ccc;
+    position: relative;
+    top: 3px;
+    margin-right: 4px;
+}
+
+input[type=checkbox]:checked::after {
+    content: "\2713";
+    display: block;
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: 0;
+    bottom: 0;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    border: 1px solid #ddd;
+    color: red;
+    font-size: 18px;
+}
+td img{
+    width: 80px;
+    height: 80px;
+}
+
+.upload-img{
+    width: 120px;
+    height: 120px;
+    margin-right: 12px;
+}
+.img-wrap{
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: inline-block;
+    margin-right: 12px;
+}
+.btn-del{
+    position: absolute;
+    right:  0;
+    top: 0;
+    height: 20px;
+    width: 20px;
+    font-size: 24px;
+    color: #f00;
+    cursor: pointer;
+    z-index: 10
+}
